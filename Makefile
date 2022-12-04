@@ -1,14 +1,14 @@
-final.elf : main.o 1.o 2.o 3.o
-	gcc -o final.elf main.o 1.o 2.o 3.o
+spitesttest: spitest.o libMyPeri.a
+	arm-linux-gnueabi-gcc spitest.o -l MyPeri -L. -o spitesttest
 
-main.o : main.c myProject.h
-	gcc main.c -c
+spitest.o: spitest.c spi.h
+	arm-linux-gnueabi-gcc -g -c spitest.c -o spitest.o
 
-1.o : 1.c myProject.h 
-	gcc 1.c -c
+libMyPeri.a: spi.o
+	arm-linux-gnueabi-ar rc libMyPeri.a spi.o
 
-2.o : 2.c myProject.h 
-	gcc 2.c -c
+spi.o: spi.c spi.h
+	arm-linux-gnueabi-gcc -g -c spi.c -o spi.o
 
-3.o : 3.c myProject.h
-	gcc 3.c -c
+clean:
+	rm spitesttest spi.o libMyPeri.a spitest.o
