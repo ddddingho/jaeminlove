@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "accelMagGyro.h"
+#include "gyro.h"
 
 int main (void)
 {
