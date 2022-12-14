@@ -1,5 +1,7 @@
 #include "textlcd.h"
 #include "button.h"
+#include "colorled.h"
+#include "fnd.h"
 
 int main(void)
 {
@@ -8,10 +10,11 @@ int main(void)
     int keycheck ;
     int fd;
     int len;
+    int i;
     memset(&stlcd,0,sizeof(stTextLCD));
     lcdtextwrite("line 1", 0, 1);
     lcdtextwrite(0, "line 2", 2);
-
+   pwmLedInit();
     //button
     printf("button start1\r\n");
     BUTTON_MSG_T rcv;
@@ -24,9 +27,39 @@ int main(void)
     buttonInit();
     printf("button start2 - case\r\n");
 
+    //fnd
+    int number;
+        //struct tm *ptmcur;
+        
+    
+
     
    while(1){
+      //fnd
+      typedef struct tm_t
+        {
+            int tm_hour;
+            int tm_min;
+            int tm_sec;
+        } TM_T;
+        //struct tm_t * ptmcur;
+        TM_T *ptmcur;
 
+        time_t tTime;
+        if(time(&tTime) == -1)
+        {
+            return -1;
+        }
+            
+
+        ptmcur = localtime(&tTime);
+
+        number = ptmcur -> tm_hour * 10000;
+        number += ptmcur ->tm_min *100;
+        number += ptmcur -> tm_sec;
+
+        fndDisp(number,0b1010);
+        //
       msgrcv(msgID,&rcv.keyInput,sizeof(rcv.keyInput),0,0);
         printf("receive the MESSAGE ! \r\n");
         
@@ -36,6 +69,9 @@ int main(void)
             case(1): printf("\r\nTEXTLCD -  PIANO/DRUM/GUITAR \r\n"); 
                      lcdtextwrite("     PIANO     ",0,1);
                      lcdtextwrite(0," DRUM    GUITAR ",2);
+                     pwmSetPercent(100,i);
+                     if(i==2) i = 0;
+                     else i = i+1;
                      keycheck = 1;
                      break;
 

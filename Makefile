@@ -1,14 +1,24 @@
-spitesttest: spitest.o libMyPeri.a
-	arm-linux-gnueabi-gcc spitest.o -l MyPeri -L. -o spitesttest
+project_textbut.elf: project_textbut.o libMyPeri.a
+	arm-linux-gnueabi-gcc project_textbut.o -l MyPeri -L. -lpthread -o project_textbut.elf
 
-spitest.o: spitest.c spi.h
-	arm-linux-gnueabi-gcc -g -c spitest.c -o spitest.o
+project_textbut.o: project_textbut.c textlcd.h button.h fnd.h colorled.h
+	arm-linux-gnueabi-gcc -c project_textbut.c -o project_textbut.o
+		
+libMyPeri.a : textlcd.o button.o fnd.o colorled.o 
+	arm-linux-gnueabi-ar rc -c libMyPeri.a -o textlcd.o button.o fnd.o colorled.o 
 
-libMyPeri.a: spi.o
-	arm-linux-gnueabi-ar rc libMyPeri.a spi.o
+colorled.o: colorled.c colorled.h
+	arm-linux-gnueabi-gcc -g -c colorled.c -o colorled.o
 
-spi.o: spi.c spi.h
-	arm-linux-gnueabi-gcc -g -c spi.c -o spi.o
+fnd.o: fnd.c fnd.h
+	arm-linux-gnueabi-gcc -g -c fnd.c -o fnd.o
 
-clean:
-	rm spitesttest spi.o libMyPeri.a spitest.o
+button.o: button.c button.o
+	arm-linux-gnueabi-gcc -g -c button.c -o button.o
+
+textlcd.o: textlcd.h textlcd.c
+	arm-linux-gnueabi-gcc -g -c textlcd.c -o textlcd.o
+
+
+clean: 
+	rm project_textbut.elf project_textbut.o 
