@@ -23,14 +23,17 @@ int main(void)
 
    printf("message get success\r\n");
 
-   ledLibInit();
-   ledOnOff(3,1);
-   sleep(1);
-   ledOnOff(6,1);
-   sleep(1);
-   ledOnOff(1,1);
-   sleep(1);
 
+   ledLibInit();
+
+   // 초기화
+   ledOnOff(0,0);
+   ledOnOff(1,0);
+   ledOnOff(2,0);
+   ledOnOff(3,0);
+   ledOnOff(4,0);
+   ledOnOff(5,0);
+   ledOnOff(6,0);
 
    buttonInit();
    
@@ -81,7 +84,11 @@ int main(void)
          lcdtextwrite("      PIANO     ", 0, 1);
          lcdtextwrite(0, " DRUM    GUITAR ", 2);
          ledOnOff(1,1);
-         sleep(1);
+         ledOnOff(2,0);
+         ledOnOff(3,0);
+         ledOnOff(4,0);
+         ledOnOff(5,0);
+         ledOnOff(6,0);
          // color LED
          //  pwmSetPercent(100,i);
          //  if(i==2) i = 0;
@@ -104,7 +111,10 @@ int main(void)
          lcdtextwrite(0, "LINE 2          ", 2);
          ledOnOff(1,1);
          ledOnOff(2,1);
-         sleep(1);
+         ledOnOff(3,0);
+         ledOnOff(4,0);
+         ledOnOff(5,0);
+         ledOnOff(6,0);
          keycheck = 2;
          break;
 
@@ -115,7 +125,9 @@ int main(void)
          ledOnOff(1,1);
          ledOnOff(2,1);
          ledOnOff(3,1);
-         sleep(1);
+         ledOnOff(4,0);
+         ledOnOff(5,0);
+         ledOnOff(6,0);
          keycheck = 3;
          break;
 
@@ -135,7 +147,8 @@ int main(void)
          ledOnOff(2,1);
          ledOnOff(3,1);
          ledOnOff(4,1);
-         sleep(1);
+         ledOnOff(5,0);
+         ledOnOff(6,0);
          keycheck = 4;
          break;
 
@@ -150,7 +163,7 @@ int main(void)
          ledOnOff(3,1);
          ledOnOff(4,1);
          ledOnOff(5,1);
-         sleep(1);
+         ledOnOff(6,0);
          keycheck = 5;
          break;
       case (6):
@@ -161,7 +174,6 @@ int main(void)
          ledOnOff(4,1);
          ledOnOff(5,1);
          ledOnOff(6,1);
-         sleep(1);
          keycheck = 6;
          break;
       }
